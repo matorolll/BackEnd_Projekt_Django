@@ -34,27 +34,27 @@ Lista zadań do wykonania
 - [x] Przepisanie podstron z js na django
 - [x] Utworzenie widokow, url
 - [x] Utworzenie modeli dla uzytkownikow
-- [ ] Dodanie dostepu do panelu administratora
-- [ ] Podlaczenie z mysql
-- [ ] ---
-- [ ] Dodanie Rejestracji nowych kont w mysql poprzez formularz
-- [ ] Dodanie Logowania na konta w mysql poprzez formularz
-- [ ] Dodanie wylogowywania
-- [ ] Dodanie strone z zarzadzaniem aukcjami
-- [ ] Utworzyc funkcjonalnosc dodawania / usuwania aukcji
+- [x] Dodanie dostepu do panelu administratora
+- [x] Podlaczenie z mysql
+- [x] ---
+- [x] Dodanie Rejestracji nowych kont w mysql poprzez formularz
+- [x] Dodanie Logowania na konta w mysql poprzez formularz
+- [x] Dodanie wylogowywania
+- [x] Dodanie strone z zarzadzaniem aukcjami
+- [x] Utworzyc funkcjonalnosc dodawania / usuwania aukcji
 - [ ] Dodanie funkcjonalnosc modyfikacji aukcji
 - [ ] Dodanie filtrowanie po typie paliwa
 - [ ] Dodanie filtrowanie po typie nadwozia
 - [ ] Dodanie wyszukiwanie po tekscie
-- [ ] Dodanie prywatnego portfela
-- [ ] Zarzadzanie portfelem (mysql) ze strony
-- [ ] ---
-- [ ] Dodanie rejestracji i logowania poprzez google
-- [ ] Edycja panelu logowania przez google
-- [ ] ---
+- [x] Dodanie prywatnego portfela
+- [x] Zarzadzanie portfelem (mysql) ze strony
+- [x] ---
+- [x] Dodanie rejestracji i logowania poprzez google
+- [x] Edycja panelu logowania przez google
+- [x] ---
 - [ ] Dodanie mozliwosc platnosci online
 - [ ] Dodanie funkcjonalonosc zmiany wartosc portfela poprzez platnosc online
-- [ ] ---
+- [x] ---
 - [ ] Dodanie podstrony Archiwum z aukcjami juz wykupionymi
 - [ ] Dodanie mozliwosc zakupu aukcji (aukcja zostaje przeniesiona z Aukcje do Archiwum oraz do innej tabeli mysql)
 - [ ] Poprawa styli bootstrap na calej stronie
