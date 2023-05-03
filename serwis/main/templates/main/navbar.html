@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+
+{% block navbar %}
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="">P0lski Bunker</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0" style="max-height: 100px;" navbarScroll>
+        <li class="nav-item">
+          <a class="nav-link" href="">Strona Główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">Aukcje</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">Kontakt</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">Archiwum</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Szybkie Wyszukiwanie
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a class="dropdown-item" href="">Hatchback</a></li>
+            <li><a class="dropdown-item" href="">Kombi</a></li>
+            <li><a class="dropdown-item" href="">Sedan</a></li>
+            <li><a class="dropdown-item" href="">Van</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="">Crossover</a></li>
+            <li><a class="dropdown-item" href="">SUV</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="">Dorożki</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+      <a href=""><button type="button" class="btn btn-secondary mx-2">Zaloguj się</button></a>
+      <a href=""><button type="button" class="btn btn-primary">Zarejestruj się</button></a>
+      </div>
+    </nav>
+
+
+
+{% endblock %}

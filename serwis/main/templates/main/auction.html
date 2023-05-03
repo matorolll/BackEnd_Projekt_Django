@@ -1,0 +1,115 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="gradient-col" >
+    <div class="py-5 text-center container ">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="text-muted">Każdy znajdzie coś dla siebie</h1>
+                <p class="lead text-muted">Wyszukaj, porównaj, wykup, sprawdź, zadzwoń - wszystko w jednym miejscu z funkcjami wyszukiwania treść</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="navbar navbar-dark bg-dark  border-bottom ">
+    <div class="container">
+      <div class="navbar-brand d-flex align-items-center">Aktualność</div>
+
+      <div>
+        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" onClick=""/>
+        <label class="btn btn-outline-primary" for="option1">Benzyna</label>
+        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" onClick=""/>
+        <label class="btn btn-outline-primary" for="option2">Diesel</label>
+        <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off" onClick=""/>
+        <label class="btn btn-outline-primary" for="option3">Hybryda</label>
+        <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off" onClick=""/>
+        <label class="btn btn-outline-primary" for="option4">Elektryczny</label>
+        <input type="radio" class="btn-check" name="options" id="option5" autocomplete="off" onClick=""/>
+        <label class="btn btn-outline-primary" for="option5">Konie</label>
+        <input type="radio" class="btn-check" name="options" id="option6" autocomplete="off" onClick=""/>
+        <label class="btn btn-outline-primary" for="option6">Odznacz</label>
+      </div>
+
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="input-group ">
+
+          <div class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"  aria-expanded="false">Filtruj<span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item"  onClick=""    >Od najtańszych</a></li>
+              <li><a class="dropdown-item"  onClick=""   >Od najdroższych</a></li>
+              <li><a class="dropdown-item"  onClick="" >Od najbardziej popularnych</a></li>
+              <li><a class="dropdown-item"  onClick="">Od najmniej popularnych</a></li>
+            </ul>
+          </div>
+
+          <input type="search" class="form-control rounded" placeholder="Szukaj" aria-label="Search" aria-describedby="search-addon" onChange="" />
+          <button type="button" class="btn btn-outline-primary">Szukaj</button>
+
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+    
+</div>
+
+<div class="album py-5 bg-dark">
+    <div class="container">
+
+          <div class="text-white">
+          {% if user.is_authenticated %} 
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">  
+            {% for auto in auta %}
+
+
+            <div  class="col">
+              <div class="card shadow-sm ">
+                
+                <img src="{{ auto.zdj_url }}" alt="img" class="img-fluid mx-auto d-block">
+                <div class="card-body bg-black text-white">
+                  <p class="card-text">Marka: {{ auto.nazwa }}</p>
+                  <p class="card-text">Model: {{ auto.model }}</p>
+
+                  <p class="card-text">Typ paliwa: {{ auto.paliwo }}</p>
+                  <p class="card-text">Spalanie: {{ auto.spalanie }}</p>
+                  <p class="card-text">Typ nadwozia: {{ auto.typ }}</p>
+                  <p class="card-text">Moc silnika: {{ auto.moc }}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary text-white">Zobacz</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary text-white disabled">{{ auto.cena }}zł</button>
+                    </div>
+                    <small class="text-muted">Popularnosc:  {{ auto.popularnosc }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            
+            {% else %}
+            <p>Wypierdalaj niezalogowana kurwo</p>
+          {% endif %}
+          </div>
+
+
+
+          {% if user.is_authenticated %}
+            <a href="/addAuction"><button type="button" class="btn btn-secondary mx-2">Dodaj aukcje</button></a>
+          {% endif %}
+        </div>
+    </nav>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

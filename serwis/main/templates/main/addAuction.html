@@ -1,0 +1,83 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="gradient-col" >
+    <div class="py-5 text-center container ">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="text-muted">Każdy znajdzie coś dla siebie</h1>
+                <p class="lead text-muted">Wyszukaj, porównaj, wykup, sprawdź, zadzwoń - wszystko w jednym miejscu z funkcjami wyszukiwania treść</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="album py-5 bg-dark">
+    <div class="container">
+
+        {% if user.is_authenticated %} 
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">  
+          <div  class="col">
+            <div class="card shadow-sm ">
+                
+                <form method ="post">
+                {% csrf_token %}
+                <div class="card-body bg-black text-white">
+                    <p>Dodaj nowe ogloszenie</p>
+
+                    {{ add_form.as_p }}
+
+                    <button type="submit" class="btn btn-secondary mx-2">Zapisz</button>
+                    <a href="/Auction"><button type="button" class="btn btn-secondary mx-2">Powrot</button></a>
+                </div>
+              </form>
+              </div>
+
+            </div>
+            <div  class="col">
+                <div class="card shadow-sm ">
+                    <form method ="post">
+                    {% csrf_token %}
+                    <div class="card-body bg-black text-white">
+                        <p>Usun ogloszenie</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ del_form.as_p }}
+                            <button type="submit">Usuń auto</button>
+                        </form>
+                        <button type="submit" class="btn btn-secondary mx-2">Zapisz</button>
+                        <a href="/Auction"><button type="button" class="btn btn-secondary mx-2">Powrot</button></a>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+
+                <div  class="col">
+                    <div class="card shadow-sm ">
+                        <form method ="post">
+                        {% csrf_token %}
+                        <div class="card-body bg-black text-white">
+                            <p>Dokonaj modyfikacji</p>
+
+                            <button type="submit" class="btn btn-secondary mx-2">Zapisz</button>
+                            <a href="/Auction"><button type="button" class="btn btn-secondary mx-2">Powrot</button></a>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+          </div>
+          {% endif %}
+
+
+        </div>
+    </nav>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
