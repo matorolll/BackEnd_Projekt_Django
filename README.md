@@ -12,6 +12,9 @@ Instalacja Dockera i uruchomienie bazy danych
   3. Pobieramy obraz kontenera obrazMySql.tar z dysku google https://drive.google.com/drive/folders/1m82G2kfLlRYtmyk5FjUq1miaSpiESsNy?usp=sharing
   4. Instalujemy go lokalnie na dockerze poprzez komende docker load -i obrazMySql.tar
   5. Uruchamiamy kontener docker run obrazMySql
+  6. Jeżeli nie bedzie domyslnie, musimy zbindowac obraz na 3306:3306
+
+![image](https://user-images.githubusercontent.com/121674957/235904778-b6fab002-ea57-48ad-a38c-9defa03653f1.png)
 
 
 Dodatkowo do podglądu można pobrać MySQL Workbench i podłączyć bazę w celu wyświetlania zawartość
@@ -26,7 +29,8 @@ Uruchomienie projektu django
     python manage.py createsuperuser - Tworzy admina w celu dostępu do dashboarda
   
   2. Dostęp do projektu poprzez 127.0.0.1:8000
-     Przykladowe logowanie user3 useruser itd
+  3. Przykladowe logowanie user3 useruser itd
+  4. Dodajemy plik z autoryzacja google do folderu z dysku google (tam gdzie manage.py)
   
 ![image](https://user-images.githubusercontent.com/121674957/235900345-b62ed8db-1563-4e7c-9871-c28f4f1f778e.png)
  
