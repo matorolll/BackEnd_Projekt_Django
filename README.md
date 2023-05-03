@@ -26,6 +26,7 @@ Uruchomienie projektu django
     python manage.py createsuperuser - Tworzy admina w celu dostępu do dashboarda
   
   2. Dostęp do projektu poprzez 127.0.0.1:8000
+     Przykladowe logowanie user3 useruser itd
   
 ![image](https://user-images.githubusercontent.com/121674957/235900345-b62ed8db-1563-4e7c-9871-c28f4f1f778e.png)
  
