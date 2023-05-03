@@ -2,6 +2,7 @@
 Django+Bootstrap+mysql
 
 Celem projektu jest kontynuacj projektu z repo frontendu, przepisanie z reacta+js na django, dodanie logowania poprzez media oraz sposobu płatności online
+Poprzednia wersje projektu znajdziemy pod: https://github.com/matorolll/React_projekt/tree/master , posiada ona wiecej dzialajacych funkcji oraz poprawniejszy wyglad (wystarczy przepisac z js na pythona)
 
 Instrukcja do instalacji i uruchomienia:
 
