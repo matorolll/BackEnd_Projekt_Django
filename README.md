@@ -36,7 +36,7 @@ Lista zadań do wykonania
 - [x] Utworzenie modeli dla uzytkownikow
 - [ ] Dodanie dostepu do panelu administratora
 - [ ] Podlaczenie z mysql
-
+- [ ] ---
 - [ ] Dodanie Rejestracji nowych kont w mysql poprzez formularz
 - [ ] Dodanie Logowania na konta w mysql poprzez formularz
 - [ ] Dodanie wylogowywania
@@ -48,13 +48,13 @@ Lista zadań do wykonania
 - [ ] Dodanie wyszukiwanie po tekscie
 - [ ] Dodanie prywatnego portfela
 - [ ] Zarzadzanie portfelem (mysql) ze strony
-
+- [ ] ---
 - [ ] Dodanie rejestracji i logowania poprzez google
 - [ ] Edycja panelu logowania przez google
-
+- [ ] ---
 - [ ] Dodanie mozliwosc platnosci online
 - [ ] Dodanie funkcjonalonosc zmiany wartosc portfela poprzez platnosc online
-
+- [ ] ---
 - [ ] Dodanie podstrony Archiwum z aukcjami juz wykupionymi
 - [ ] Dodanie mozliwosc zakupu aukcji (aukcja zostaje przeniesiona z Aukcje do Archiwum oraz do innej tabeli mysql)
 - [ ] Poprawa styli bootstrap na calej stronie
