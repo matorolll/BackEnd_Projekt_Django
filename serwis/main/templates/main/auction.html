@@ -15,43 +15,49 @@
 <div class="navbar navbar-dark bg-dark  border-bottom ">
     <div class="container">
       <div class="navbar-brand d-flex align-items-center">Aktualność</div>
-
-      <div>
-        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" onClick=""/>
+      
+      <form method="GET" action="{% url 'auction' %}" class="form-inline mr-5">
+        <input type="radio" class="btn-check" name="fuels" id="option1" value="Benzyna"
+          onchange="this.form.submit()" {% if request.GET.fuels == 'Benzyna' %}checked{% endif %}>
         <label class="btn btn-outline-primary" for="option1">Benzyna</label>
-        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" onClick=""/>
+        
+        <input type="radio" class="btn-check" name="fuels" id="option2" value="Diesel"
+          onchange="this.form.submit()" {% if request.GET.fuels == 'Diesel' %}checked{% endif %}>
         <label class="btn btn-outline-primary" for="option2">Diesel</label>
-        <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off" onClick=""/>
+        
+        <input type="radio" class="btn-check" name="fuels" id="option3" value="Hybryda" 
+          onchange="this.form.submit()" {% if request.GET.fuels == 'Hybryda' %}checked{% endif %}>
         <label class="btn btn-outline-primary" for="option3">Hybryda</label>
-        <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off" onClick=""/>
+        
+        <input type="radio" class="btn-check" name="fuels" id="option4" value="Elektryczny" 
+          onchange="this.form.submit()" {% if request.GET.fuels == 'Elektryczny' %}checked{% endif %}>
         <label class="btn btn-outline-primary" for="option4">Elektryczny</label>
-        <input type="radio" class="btn-check" name="options" id="option5" autocomplete="off" onClick=""/>
+        
+        <input type="radio" class="btn-check" name="fuels" id="option5" value="Konie" 
+          onchange="this.form.submit()" {% if request.GET.fuels == 'Konie' %}checked{% endif %}>
         <label class="btn btn-outline-primary" for="option5">Konie</label>
-        <input type="radio" class="btn-check" name="options" id="option6" autocomplete="off" onClick=""/>
-        <label class="btn btn-outline-primary" for="option6">Odznacz</label>
-      </div>
+        
+        <input type="radio" class="btn-check" name="fuels" id="option6" value="" 
+          onchange="this.form.submit()" {% if not request.GET.fuels %}checked{% endif %}>
+        <label class="btn btn-outline-primary" for="option6">Odznacz</label>        
+        
+        <div class="col">
+          <select class="form-select" name="sorts" onchange="this.form.submit()">
+            <option value="tanie" {% if request.GET.sorts == 'tanie' %}selected{% endif %}>tanie</option>
+            <option value="drogie" {% if request.GET.sorts == 'drogie' %}selected{% endif %}>drogie</option>
+            <option value="popularne" {% if request.GET.sorts == 'popularne' %}selected{% endif %}>popularne</option>
+            <option value="niepopularne" {% if request.GET.sorts == 'niepopularne' %}selected{% endif %}>niepopularne</option>
 
-      <div class="col-xs-8 col-xs-offset-2">
-        <div class="input-group ">
-
-          <div class="dropdown">
-            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"  aria-expanded="false">Filtruj<span class="caret"></span></button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item"  onClick=""    >Od najtańszych</a></li>
-              <li><a class="dropdown-item"  onClick=""   >Od najdroższych</a></li>
-              <li><a class="dropdown-item"  onClick="" >Od najbardziej popularnych</a></li>
-              <li><a class="dropdown-item"  onClick="">Od najmniej popularnych</a></li>
-            </ul>
-          </div>
-
-          <input type="search" class="form-control rounded" placeholder="Szukaj" aria-label="Search" aria-describedby="search-addon" onChange="" />
-          <button type="button" class="btn btn-outline-primary">Szukaj</button>
-
+            <option value="mocmin" {% if request.GET.sorts == 'mocmin' %}selected{% endif %}>Najslabsze</option>
+            <option value="mocmax" {% if request.GET.sorts == 'mocmax' %}selected{% endif %}>Najmocniejsze</option>
+            <option value="spalaniemin" {% if request.GET.sorts == 'spalaniemin' %}selected{% endif %}>najmniejsze spalanie</option>
+            <option value="spalaniemax" {% if request.GET.sorts == 'spalaniemax' %}selected{% endif %}>najwieksze spalanie</option>
+          </select>
         </div>
-      </div>
 
-
-
+        <input type="search" class="form-control rounded" name="search" placeholder="Szukaj" aria-label="Search" aria-describedby="search-addon"/>
+        <button type="button" class="btn btn-outline-primary" onclick="this.form.submit()">Szukaj</button>
+      </form>
 
 
     </div>

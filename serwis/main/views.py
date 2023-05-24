@@ -47,9 +47,28 @@ def showHomePage(request):
 def showAuctionPage(request):
     if request.user.is_authenticated:
         auta = Auta.objects.all()
+        typ_paliwa = request.GET.get('fuels')
+        typ_sortowania = request.GET.get('sorts')
+        slowo = request.GET.get('search')
+
+
+        if   typ_paliwa: auta = Auta.objects.filter(paliwo=typ_paliwa)
+        if   slowo: auta = auta.filter(nazwa__contains=slowo)
+
+        if   typ_sortowania == 'tanie':        auta = auta.order_by('cena')
+        elif typ_sortowania == 'drogie':       auta = auta.order_by('-cena')
+        elif typ_sortowania == 'popularne':    auta = auta.order_by('-popularnosc')
+        elif typ_sortowania == 'niepopularne': auta = auta.order_by('popularnosc')
+
+        elif typ_sortowania == 'mocmin':       auta = auta.order_by('moc')
+        elif typ_sortowania == 'mocmax':       auta = auta.order_by('-moc')
+        elif typ_sortowania == 'spalaniemin':  auta = auta.order_by('spalanie')
+        elif typ_sortowania == 'spalaniemax':  auta = auta.order_by('-spalanie')
+
+        
+
         user = balance.objects.get(user=request.user)
-        context = {'auta':auta,
-                'balance': user.balance}
+        context = {'auta':auta,'balance': user.balance}
     else: context={} 
     return render(request, "main/auction.html",context)
 
