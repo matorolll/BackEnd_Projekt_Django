@@ -58,7 +58,7 @@ Lista zadań do wykonania
 - [x] Dodanie rejestracji i logowania poprzez google
 - [x] Edycja panelu logowania przez google
 - [x] ---
-- [ ] Dodanie mozliwosc platnosci online
+- [x] Dodanie mozliwosc platnosci online
 - [ ] Dodanie funkcjonalonosc zmiany wartosc portfela poprzez platnosc online
 - [x] ---
 - [ ] Dodanie podstrony Archiwum z aukcjami juz wykupionymi
