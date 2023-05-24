@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 
 {% block content %}
-<div class="gradient-col" >
+<div class="gradient-col" style="background-image: linear-gradient(black, rgb(44, 42, 42));" >
     <div class="py-5 text-center container ">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
@@ -70,7 +70,10 @@
             <div  class="col">
               <div class="card shadow-sm ">
                 
-                <img src="{{ auto.zdj_url }}" alt="img" class="img-fluid mx-auto d-block">
+                <div class="d-flex justify-content-center align-items-center" style="width: 419px; height: 300px; overflow: hidden;">
+                  <img src="{{ auto.zdj_url }}" alt="img" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+                </div>
+                
                 <div class="card-body bg-black text-white">
                   <p class="card-text">Marka: {{ auto.nazwa }}</p>
                   <p class="card-text">Model: {{ auto.model }}</p>
@@ -79,20 +82,25 @@
                   <p class="card-text">Spalanie: {{ auto.spalanie }}</p>
                   <p class="card-text">Typ nadwozia: {{ auto.typ }}</p>
                   <p class="card-text">Moc silnika: {{ auto.moc }}</p>
+                  <p class="card-text">Debug id: {{ auto.id }}</p>
+
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary text-white">Zobacz</button>
+                      <a href="{% url 'dotpay' auto.cena auto.model auto.id%}">
+                      <button type="button" class="btn btn-sm btn-outline-secondary text-white">Kup</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary text-white disabled">{{ auto.cena }}zł</button>
+                      </a>
                     </div>
                     <small class="text-muted">Popularnosc:  {{ auto.popularnosc }}</small>
                   </div>
                 </div>
               </div>
+
             </div>
             {% endfor %}
             
             {% else %}
-            <p>Wypierdalaj niezalogowana kurwo</p>
+            <p>Uprzejmie prosimy pana lekkich obyczajów który nie posiada wystarczających uprawnień autoryzacji o opuszczenie tego przybytku</p>
           {% endif %}
           </div>
 
@@ -103,10 +111,6 @@
           {% endif %}
         </div>
     </nav>
-
-
-
-
 
         </div>
     </div>

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 from .models import Auta
 from .models import balance
@@ -10,21 +11,27 @@ from .models import AddAuctionForm
 from .models import DelAUctionForm
 
 
-########################### RENDEROWANIE ###########################
+#Do platnosc paypal
+import paypalrestsdk
+from django.conf import settings
+from django.urls import reverse
+
+#Do platnosci dotpay
+import hashlib, json, hmac
+
+
+################# || ############################# || #############
+#               # || #          Rendering        # || #           #
+################# \/ ############################# \/ #############
 
 #renderowanie strony bazowej
 def index(request):
     return render(request, "main/base.html", {})
 
+
 #renderowanie strony homepage.html
 def showHomePage(request):
     if request.user.is_authenticated:
-
-        if not balance.objects.filter(user=request.user).exists(): # sprawdź, czy użytkownik ma już konto w tabeli balansów
-            instance = balance(user=request.user, balance=100) # utwórz nowy rekord dla użytkownika
-            instance.save()
-
-
         user = balance.objects.get(user=request.user)
         context = {'balance': user.balance}
     else: context={}
@@ -48,11 +55,20 @@ def showContactPage(request):
     else: context={}
     return render(request, "main/contact.html", context)
 
-####################################################################
+#renderowanie strony poprawnej platnosc dotpay
+def showDotpaySucess(request):
+    return render(request, "main/dotpaySuccess.html", {})
+
+################# /\ ############################# /\ #############
+#               # || #      End of Rendering     # || #           #
+################# || ############################# || #############
 
 
 
-####################### SYSTEMY UZYTKOWNIKA ########################
+
+################# || ############################# || #############
+#               # || #        User systems       # || #           #
+################# \/ ############################# \/ #############
 
 #rejestracja
 def showSignupPage(request):
@@ -113,9 +129,18 @@ def update_balance(request):
         return redirect('/')
     else: return render(request, 'main/auction.html')
 
-##################### ZARZADZANIE AUKCJAMI ########################
+################# /\ ############################# /\ #############
+#               # || #    End of User systems    # || #           #
+################# || ############################# || #############
 
-#widok do dodawania i usuwania aukcji
+
+
+
+
+################# || ############################# || #############
+#               # || #    Auctions management    # || #           #
+################# \/ ############################# \/ #############
+
 def actionAuction(request):
 
     if request.method == 'POST':
@@ -140,4 +165,103 @@ def actionAuction(request):
     }
     return render(request, 'main/addAuction.html', context)
 
-####################################################################
+################# /\ ############################# /\ #############
+#               # || # End of Auction management # || #           #
+################# || ############################# || #############
+
+
+
+
+
+################# || ############################# || #############
+#               # || #       Paypal payment      # || #           #
+################# \/ ############################# \/ #############
+
+def paypalSite(request):
+    if request.method == 'POST':
+        paypalrestsdk.configure({
+            "mode": "sandbox" if settings.DEBUG else "live",
+            "client_id": settings.PAYPAL_CLIENT_ID,
+            "client_secret": settings.PAYPAL_CLIENT_SECRET
+        })
+
+        payment = paypalrestsdk.Payment({
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "redirect_urls": {
+                "return_url": request.build_absolute_uri(reverse('payment_success')),
+                "cancel_url": request.build_absolute_uri(reverse('payment_cancel'))
+            },
+            "transactions": [{
+                "amount": {
+                    "total": "10.00", 
+                    "currency": "USD" 
+                },
+                "description": "Opis płatności"
+            }]
+        })
+
+        if payment.create():
+            for link in payment.links:
+                if link.method == 'REDIRECT':
+                    redirect_url = str(link.href)
+                    return HttpResponseRedirect(redirect_url)
+        else: print(payment.error) 
+    return render(request, 'paypal_tutorial.html')
+
+################# /\ ############################# /\ #############
+#               # || #   End of Paypal payment   # || #           #
+################# || ############################# || #############
+
+
+
+
+
+################# || ############################# || #############
+#               # || #       Dotpay payment      # || #           #
+################# \/ ############################# \/ #############
+
+#do funkcji dotpay()
+def gen_checksum(amount: int, description: any, currency: str, url: str, type: int):
+    DOTPAY_PIN = '5DZW0YRq2w46bDWOJukzngQcEKbi3Xdj'
+    DOTPAY_ID = '746170'
+    subscription = {
+        "price": str(amount),
+        "description": str(description),
+        "url": str(url),
+        "type": str(type),
+    }
+    currency = str(currency)
+    paramsArr = {
+        "amount": subscription["price"],
+        "currency": currency,
+        "description": subscription["description"],
+        "id": DOTPAY_ID,
+        "paramsList": "amount;currency;description;id;type;url",
+        "type": subscription["type"],
+        "url": subscription["url"],
+    }
+    paramsArrJson = json.dumps(paramsArr, separators=(",", ":"))
+    chk = hmac.new(DOTPAY_PIN.encode("utf-8"), msg=paramsArrJson.encode("utf-8"), digestmod=hashlib.sha256)
+    checksum = chk.hexdigest()
+    return checksum
+
+#Dotpay payment
+login_required
+def dotpaySite(request,cena, model,id):
+    DOTPAY_ID  = 746170
+    DOTPAY_AMOUNT = cena
+    DOTPAY_CURRENCY = "PLN"
+    DOTPAY_DESCRIPTION = "zaplata za auto (numer katalogowy: {}) {}".format(id,model)
+    DOTPAY_URL = "http://127.0.0.1:8000/Dotpay-Success/"
+    DOTPAY_TYPE = 4
+    DOTPAY_CHECKSUM = gen_checksum(DOTPAY_AMOUNT,DOTPAY_DESCRIPTION,DOTPAY_CURRENCY,DOTPAY_URL,DOTPAY_TYPE)
+    dotpay_url = "https://ssl.dotpay.pl/test_payment/?id={}&amount={}&currency={}&description={}&chk={}&url={}&type={}".format(
+                             DOTPAY_ID,DOTPAY_AMOUNT,DOTPAY_CURRENCY,DOTPAY_DESCRIPTION,DOTPAY_CHECKSUM,DOTPAY_URL,DOTPAY_TYPE)
+    return redirect(dotpay_url)
+
+################# /\ ############################# /\ #############
+#               # || #   End of Dotpay payment   # || #           #
+################# || ############################# || #############

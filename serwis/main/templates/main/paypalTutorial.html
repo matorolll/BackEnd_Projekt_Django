@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+    <div id="paypal-button-container"></div>
+    <script src="https://www.paypal.com/sdk/js?client-id=AbK1ZDZMzodKmoeYmV4PxuBEC6HLsmlttf4s_7rTWDmKLoSyB0f5sf12WdeLl-_S683IqPVWzune5Q3-&currency=USD"></script>
+
+    <script>
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '1.00'
+                    }
+                }]
+            });
+        },
+
+        onApprove: function(data, actions) {
+            return axctions.order.caputer().then(function(details){
+                alert(`Transaction completed by ` + details.payer.name.given_name + "!");
+
+            });
+        }
+      }).render('#paypal-button-container');
+    </script>
+  </body>

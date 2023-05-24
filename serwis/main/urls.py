@@ -1,9 +1,6 @@
 from django.urls import path
 from . import views
 
-
-#sciezka, funkcja z views, nazwa
-
 urlpatterns = [
     #GENEROWANIE WIDOKOW
     path("", views.showHomePage, name="home"),
@@ -19,6 +16,8 @@ urlpatterns = [
     path('update-balance/', views.update_balance, name='update_balance'),
     path("addAuction/", views.actionAuction, name="addAuction"),
 
-
-
+    #ZARZADZANIE PLATNOSCIAMI
+    path("Paypal-checkout/", views.paypalSite, name='paypalTutorial'),
+    path("Dotpay-checkout/<int:cena>/<str:model>/<int:id>", views.dotpaySite, name='dotpay'),
+    path("Dotpay-Success/", views.showDotpaySucess, name="dotpaysuccess"),
 ]
