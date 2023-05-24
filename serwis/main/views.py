@@ -32,6 +32,12 @@ def index(request):
 #renderowanie strony homepage.html
 def showHomePage(request):
     if request.user.is_authenticated:
+
+        if not balance.objects.filter(user=request.user).exists(): # sprawdź, czy użytkownik ma już konto w tabeli balansów
+            instance = balance(user=request.user, balance=100) # utwórz nowy rekord dla użytkownika
+            instance.save()
+
+
         user = balance.objects.get(user=request.user)
         context = {'balance': user.balance}
     else: context={}
@@ -111,6 +117,7 @@ def showLoginPage(request):
             context = {'form': form, 'error_message': 'Nieprawidłowa nazwa użytkownika lub hasło.'}
             return render(request, 'main/login.html', context)
     else: return render(request, 'main/login.html', {'form': AuthenticationForm()})
+
 
 #wylogowanie
 login_required
