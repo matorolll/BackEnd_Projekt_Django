@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
-from .models import Auta
+from .models import Auta, AutaSprzedane
 from .models import balance
 from .models import CreateUserForm
 from .models import AddAuctionForm
@@ -18,6 +18,7 @@ from django.urls import reverse
 
 #Do platnosci dotpay
 import hashlib, json, hmac
+
 
 
 ################# || ############################# || #############
@@ -43,6 +44,9 @@ def showHomePage(request):
     else: context={}
     return render(request, "main/homepage.html",context)
 
+
+
+
 #renderowanie strony auction.html
 def showAuctionPage(request):
     if request.user.is_authenticated:
@@ -51,7 +55,6 @@ def showAuctionPage(request):
         typ_sortowania = request.GET.get('sorts')
         slowo = request.GET.get('search')
 
-
         if   typ_paliwa: auta = Auta.objects.filter(paliwo=typ_paliwa)
         if   slowo: auta = auta.filter(nazwa__contains=slowo)
 
@@ -59,18 +62,18 @@ def showAuctionPage(request):
         elif typ_sortowania == 'drogie':       auta = auta.order_by('-cena')
         elif typ_sortowania == 'popularne':    auta = auta.order_by('-popularnosc')
         elif typ_sortowania == 'niepopularne': auta = auta.order_by('popularnosc')
-
         elif typ_sortowania == 'mocmin':       auta = auta.order_by('moc')
         elif typ_sortowania == 'mocmax':       auta = auta.order_by('-moc')
         elif typ_sortowania == 'spalaniemin':  auta = auta.order_by('spalanie')
         elif typ_sortowania == 'spalaniemax':  auta = auta.order_by('-spalanie')
 
-        
-
         user = balance.objects.get(user=request.user)
         context = {'auta':auta,'balance': user.balance}
     else: context={} 
     return render(request, "main/auction.html",context)
+
+
+
 
 #renderowanie strony contact.html
 def showContactPage(request):
@@ -80,9 +83,91 @@ def showContactPage(request):
     else: context={}
     return render(request, "main/contact.html", context)
 
+
+
+
+#renderowanie strony contact.html
+def showArchivePage(request):
+    if request.user.is_authenticated:
+        auta = AutaSprzedane.objects.all()
+        typ_paliwa = request.GET.get('fuels')
+        typ_sortowania = request.GET.get('sorts')
+        slowo = request.GET.get('search')
+
+        if   typ_paliwa: auta = AutaSprzedane.objects.filter(paliwo=typ_paliwa)
+        if   slowo: auta = auta.filter(nazwa__contains=slowo)
+
+        if   typ_sortowania == 'tanie':        auta = auta.order_by('cena')
+        elif typ_sortowania == 'drogie':       auta = auta.order_by('-cena')
+        elif typ_sortowania == 'popularne':    auta = auta.order_by('-popularnosc')
+        elif typ_sortowania == 'niepopularne': auta = auta.order_by('popularnosc')
+        elif typ_sortowania == 'mocmin':       auta = auta.order_by('moc')
+        elif typ_sortowania == 'mocmax':       auta = auta.order_by('-moc')
+        elif typ_sortowania == 'spalaniemin':  auta = auta.order_by('spalanie')
+        elif typ_sortowania == 'spalaniemax':  auta = auta.order_by('-spalanie')
+
+        user = balance.objects.get(user=request.user)
+        context = {'auta':auta,'balance': user.balance}
+    else: context={} 
+    return render(request, "main/archive.html",context)
+
 #renderowanie strony poprawnej platnosc dotpay
 def showDotpaySucess(request):
-    return render(request, "main/dotpaySuccess.html", {})
+    if request.user.is_authenticated:
+        id = request.GET.get('id')
+
+        if request.user.first_name: userid = user.first_name
+        else: userid = request.user.username
+
+        try:auto = Auta.objects.get(id=id)
+        except Auta.DoesNotExist: return "Samochód o podanym ID nie istnieje"
+
+        auto_sprzedane = AutaSprzedane(
+            nazwa=auto.nazwa,
+            zdj_url=auto.zdj_url,
+            cena=auto.cena,
+            model=auto.model,
+            popularnosc=auto.popularnosc,
+            paliwo=auto.paliwo,
+            spalanie=auto.spalanie,
+            typ=auto.typ,
+            moc=auto.moc,
+            uzytkownik=userid
+        )
+        auto_sprzedane.save()
+        auto.delete()
+
+        user = balance.objects.get(user=request.user)
+        context = {'auto':auto,'balance': user.balance}
+    else: context={} 
+    return render(request, "main/archive.html", context)
+
+
+#renderowanie strony poprawnej platnosc dotpay
+def returnCar(request,id):
+    if request.user.is_authenticated:
+        try:auto_wycofane = AutaSprzedane.objects.get(id=id)
+        except AutaSprzedane.DoesNotExist: return "Samochód o podanym ID nie istnieje"
+
+        auto = Auta(
+            nazwa=auto_wycofane.nazwa,
+            zdj_url=auto_wycofane.zdj_url,
+            cena=auto_wycofane.cena,
+            model=auto_wycofane.model,
+            popularnosc=auto_wycofane.popularnosc,
+            paliwo=auto_wycofane.paliwo,
+            spalanie=auto_wycofane.spalanie,
+            typ=auto_wycofane.typ,
+            moc=auto_wycofane.moc,
+        )
+        auto.save()
+        auto_wycofane.delete()
+
+        user = balance.objects.get(user=request.user)
+        context = {'auto':auto,'balance': user.balance}
+    else: context={} 
+    return render(request, "main/archive.html", context)
+
 
 ################# /\ ############################# /\ #############
 #               # || #      End of Rendering     # || #           #
@@ -235,7 +320,7 @@ def paypalSite(request):
                     redirect_url = str(link.href)
                     return HttpResponseRedirect(redirect_url)
         else: print(payment.error) 
-    return render(request, 'paypal_tutorial.html')
+    return render(request, 'main/paypalTutorial.html')
 
 ################# /\ ############################# /\ #############
 #               # || #   End of Paypal payment   # || #           #
@@ -281,7 +366,7 @@ def dotpaySite(request,cena, model,id):
     DOTPAY_AMOUNT = cena
     DOTPAY_CURRENCY = "PLN"
     DOTPAY_DESCRIPTION = "zaplata za auto (numer katalogowy: {}) {}".format(id,model)
-    DOTPAY_URL = "http://127.0.0.1:8000/Dotpay-Success/"
+    DOTPAY_URL = "http://127.0.0.1:8000/Dotpay-Success/?id={}".format(id)
     DOTPAY_TYPE = 4
     DOTPAY_CHECKSUM = gen_checksum(DOTPAY_AMOUNT,DOTPAY_DESCRIPTION,DOTPAY_CURRENCY,DOTPAY_URL,DOTPAY_TYPE)
     dotpay_url = "https://ssl.dotpay.pl/test_payment/?id={}&amount={}&currency={}&description={}&chk={}&url={}&type={}".format(

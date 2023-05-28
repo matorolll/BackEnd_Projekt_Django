@@ -1,0 +1,124 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="gradient-col" style="background-image: linear-gradient(black, rgb(44, 42, 42));" >
+    <div class="py-5 text-center container ">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="text-muted">Każdy znajdzie coś dla siebie</h1>
+                <p class="lead text-muted">Wyszukaj, porównaj, wykup, sprawdź, zadzwoń - wszystko w jednym miejscu z funkcjami wyszukiwania treść</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="navbar navbar-dark bg-dark  border-bottom ">
+    <div class="container">
+      <div class="navbar-brand d-flex align-items-center">Archiwum Zakupow</div>
+      
+      <form method="GET" action="{% url 'archive' %}" class="form-inline mr-5">
+        <input type="radio" class="btn-check" name="fuels" id="option1" value="Benzyna"
+          onchange="this.form.submit()" {% if request.GET.fuels == 'Benzyna' %}checked{% endif %}>
+        <label class="btn btn-outline-primary" for="option1">Benzyna</label>
+        
+        <input type="radio" class="btn-check" name="fuels" id="option2" value="Diesel"
+          onchange="this.form.submit()" {% if request.GET.fuels == 'Diesel' %}checked{% endif %}>
+        <label class="btn btn-outline-primary" for="option2">Diesel</label>
+        
+        <input type="radio" class="btn-check" name="fuels" id="option3" value="Hybryda" 
+          onchange="this.form.submit()" {% if request.GET.fuels == 'Hybryda' %}checked{% endif %}>
+        <label class="btn btn-outline-primary" for="option3">Hybryda</label>
+        
+        <input type="radio" class="btn-check" name="fuels" id="option4" value="Elektryczny" 
+          onchange="this.form.submit()" {% if request.GET.fuels == 'Elektryczny' %}checked{% endif %}>
+        <label class="btn btn-outline-primary" for="option4">Elektryczny</label>
+        
+        <input type="radio" class="btn-check" name="fuels" id="option5" value="Konie" 
+          onchange="this.form.submit()" {% if request.GET.fuels == 'Konie' %}checked{% endif %}>
+        <label class="btn btn-outline-primary" for="option5">Konie</label>
+        
+        <input type="radio" class="btn-check" name="fuels" id="option6" value="" 
+          onchange="this.form.submit()" {% if not request.GET.fuels %}checked{% endif %}>
+        <label class="btn btn-outline-primary" for="option6">Odznacz</label>        
+        
+        <div class="col">
+          <select class="form-select" name="sorts" onchange="this.form.submit()">
+            <option value="tanie" {% if request.GET.sorts == 'tanie' %}selected{% endif %}>tanie</option>
+            <option value="drogie" {% if request.GET.sorts == 'drogie' %}selected{% endif %}>drogie</option>
+            <option value="popularne" {% if request.GET.sorts == 'popularne' %}selected{% endif %}>popularne</option>
+            <option value="niepopularne" {% if request.GET.sorts == 'niepopularne' %}selected{% endif %}>niepopularne</option>
+
+            <option value="mocmin" {% if request.GET.sorts == 'mocmin' %}selected{% endif %}>Najslabsze</option>
+            <option value="mocmax" {% if request.GET.sorts == 'mocmax' %}selected{% endif %}>Najmocniejsze</option>
+            <option value="spalaniemin" {% if request.GET.sorts == 'spalaniemin' %}selected{% endif %}>najmniejsze spalanie</option>
+            <option value="spalaniemax" {% if request.GET.sorts == 'spalaniemax' %}selected{% endif %}>najwieksze spalanie</option>
+          </select>
+        </div>
+
+        <input type="search" class="form-control rounded" name="search" placeholder="Szukaj" aria-label="Search" aria-describedby="search-addon"/>
+        <button type="button" class="btn btn-outline-primary" onclick="this.form.submit()">Szukaj</button>
+      </form>
+
+
+    </div>
+    
+</div>
+
+<div class="album py-5 bg-dark">
+    <div class="container">
+
+          <div class="text-white">
+          {% if user.is_authenticated %} 
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">  
+            {% for auto in auta %}
+
+
+            <div  class="col">
+              <div class="card shadow-sm ">
+                
+                <div class="d-flex justify-content-center align-items-center" style="width: 419px; height: 300px; overflow: hidden;">
+                  <img src="{{ auto.zdj_url }}" alt="img" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+                </div>
+                
+                <div class="card-body bg-black text-white">
+                  <p class="card-text">Marka: {{ auto.nazwa }}</p>
+                  <p class="card-text">Model: {{ auto.model }}</p>
+
+                  <p class="card-text">Typ paliwa: {{ auto.paliwo }}</p>
+                  <p class="card-text">Spalanie: {{ auto.spalanie }}</p>
+                  <p class="card-text">Typ nadwozia: {{ auto.typ }}</p>
+                  <p class="card-text">Moc silnika: {{ auto.moc }}</p>
+                  <p class="card-text">Debug id: {{ auto.id }}</p>
+
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      {% if user.first_name %}
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-white">Zakupiono przez {{user.first_name}}</button>
+                        {% else %}
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-white">Zakupiono przez {{user.username}}</button>
+                      {% endif %}
+                      <button type="button" class="btn btn-sm btn-outline-secondary text-white disabled">{{ auto.cena }}zł</button>
+                    </div>
+                    <small class="text-muted">Popularnosc:  {{ auto.popularnosc }}</small>
+                    
+                  </div>
+                  <a href="{% url 'returncar' auto.id%}"><button type="button" class="btn btn-sm btn-outline-secondary text-white">Wycofaj zakup</button></a>
+
+                </div>
+              </div>
+
+            </div>
+            {% endfor %}
+            
+            {% else %}
+            <p>Uprzejmie prosimy pana lekkich obyczajów który nie posiada wystarczających uprawnień autoryzacji o opuszczenie tego przybytku</p>
+          {% endif %}
+          </div>
+        </div>
+    </nav>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

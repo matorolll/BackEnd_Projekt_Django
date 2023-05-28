@@ -20,6 +20,22 @@ class Auta(models.Model):
     class Meta:
         db_table = 'auta'
 
+class AutaSprzedane(models.Model):
+    id = models.AutoField(primary_key=True)
+    nazwa = models.CharField(max_length=255)
+    zdj_url = models.CharField(max_length=255, default="https://media.istockphoto.com/id/1281739158/vector/car-vector-logo-fit-for-automotive-repair-transportation-or-car-shop-logo-flat-color-style.jpg?s=612x612&w=0&k=20&c=cuUSEnzQUQZ7sLfsoFmaKoMxLtCMMYVM2nh3QvhbEMc=")
+    cena = models.IntegerField(default="666")
+    model = models.CharField(max_length=255, default="null")
+    popularnosc = models.IntegerField(default="0")
+    paliwo = models.CharField(max_length=255, default="null")
+    spalanie = models.FloatField(default=0.0)
+    typ = models.CharField(max_length=255, default="null")
+    moc = models.IntegerField(default="0")
+    uzytkownik = models.CharField(max_length=255, default="null")
+
+    class Meta:
+        db_table = 'auta_sprzedane'
+
 
 
 #Glowny model portfela, odpowiada za tabele w mysql portfel

@@ -5,6 +5,7 @@ urlpatterns = [
     #GENEROWANIE WIDOKOW
     path("", views.showHomePage, name="home"),
     path("Auction/", views.showAuctionPage, name="auction"),
+    path("Archive/", views.showArchivePage, name="archive"),
     path("Contact/", views.showContactPage, name="contact"),
 
     #ZARZADZANIE UZYTKOWNIKIEM
@@ -20,4 +21,6 @@ urlpatterns = [
     path("Paypal-checkout/", views.paypalSite, name='paypalTutorial'),
     path("Dotpay-checkout/<int:cena>/<str:model>/<int:id>", views.dotpaySite, name='dotpay'),
     path("Dotpay-Success/", views.showDotpaySucess, name="dotpaysuccess"),
+
+    path("Return-Car/<int:id>", views.returnCar, name="returncar"),
 ]
