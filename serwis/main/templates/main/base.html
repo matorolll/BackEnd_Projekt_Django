@@ -40,23 +40,23 @@
                   Szybkie Wyszukiwanie
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                  <li><a class="dropdown-item" href="">Hatchback</a></li>
-                  <li><a class="dropdown-item" href="">Kombi</a></li>
-                  <li><a class="dropdown-item" href="">Sedan</a></li>
-                  <li><a class="dropdown-item" href="">Van</a></li>
+                  <li><a class="dropdown-item" href="/Auction/?fuels=&sorts=tanie&search=Hatchback">Hatchback</a></li>
+                  <li><a class="dropdown-item" href="/Auction/?fuels=&sorts=tanie&search=Kombi">Kombi</a></li>
+                  <li><a class="dropdown-item" href="/Auction/?fuels=&sorts=tanie&search=Sedan">Sedan</a></li>
+                  <li><a class="dropdown-item" href="/Auction/?fuels=&sorts=tanie&search=Van">Van</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="">Crossover</a></li>
-                  <li><a class="dropdown-item" href="">SUV</a></li>
+                  <li><a class="dropdown-item" href="/Auction/?fuels=&sorts=tanie&search=Crossover">Crossover</a></li>
+                  <li><a class="dropdown-item" href="/Auction/?fuels=&sorts=tanie&search=SUV">SUV</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="">Dorożki</a></li>
+                  <li><a class="dropdown-item" href="/Auction/?fuels=&sorts=tanie&search=Dorozka">Dorożki</a></li>
                 </ul>
               </li>
             </ul>
           </div>
           {% if user.is_authenticated %}
             <form action="{% url 'update_balance' %}" method="post"> {% csrf_token %}
-              <button type="submit" class="btn btn-secondary mx-2" name="add"> dodaj 5zl</button>
-              <button type="submit" class="btn btn-secondary mx-2" name="subtract"> odejmij 5zl</button>
+              <button type="submit" class="btn btn-secondary mx-2" name="add"> dodaj 500zl</button>
+              <button type="submit" class="btn btn-secondary mx-2" name="subtract"> odejmij 500zl</button>
             </form>
             <button type="button" class="btn btn-secondary mx-2"> portfel: {{ balance }}</button>
             {% if user.first_name %}

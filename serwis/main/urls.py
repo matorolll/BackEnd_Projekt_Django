@@ -23,4 +23,9 @@ urlpatterns = [
     path("Dotpay-Success/", views.showDotpaySucess, name="dotpaysuccess"),
 
     path("Return-Car/<int:id>", views.returnCar, name="returncar"),
+
+    path("Portfel-checkout/<int:id>", views.portfelpaySite, name='portfelpay'),
+
+
+    
 ]

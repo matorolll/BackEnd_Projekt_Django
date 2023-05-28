@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 from .models import Auta, AutaSprzedane
 from .models import balance
@@ -55,8 +56,19 @@ def showAuctionPage(request):
         typ_sortowania = request.GET.get('sorts')
         slowo = request.GET.get('search')
 
-        if   typ_paliwa: auta = Auta.objects.filter(paliwo=typ_paliwa)
-        if   slowo: auta = auta.filter(nazwa__contains=slowo)
+        if typ_paliwa: auta = Auta.objects.filter(paliwo=typ_paliwa)
+        if slowo:
+            auta = auta.filter(
+                Q(nazwa__icontains=slowo) |
+                Q(zdj_url__icontains=slowo) |
+                Q(cena__icontains=slowo) |
+                Q(model__icontains=slowo) |
+                Q(popularnosc__icontains=slowo) |
+                Q(paliwo__icontains=slowo) |
+                Q(spalanie__icontains=slowo) |
+                Q(typ__icontains=slowo) |
+                Q(moc__icontains=slowo)
+    )
 
         if   typ_sortowania == 'tanie':        auta = auta.order_by('cena')
         elif typ_sortowania == 'drogie':       auta = auta.order_by('-cena')
@@ -140,7 +152,7 @@ def showDotpaySucess(request):
         user = balance.objects.get(user=request.user)
         context = {'auto':auto,'balance': user.balance}
     else: context={} 
-    return render(request, "main/archive.html", context)
+    return render(request, "main/dotpaySuccess.html", context)
 
 
 #renderowanie strony poprawnej platnosc dotpay
@@ -166,7 +178,7 @@ def returnCar(request,id):
         user = balance.objects.get(user=request.user)
         context = {'auto':auto,'balance': user.balance}
     else: context={} 
-    return render(request, "main/archive.html", context)
+    return render(request, "main/returnSuccess.html", context)
 
 
 ################# /\ ############################# /\ #############
@@ -234,8 +246,8 @@ login_required
 def update_balance(request):
     if request.method == 'POST':
         user = balance.objects.get(user=request.user)
-        if 'add' in request.POST: user.balance += 5
-        elif 'subtract' in request.POST: user.balance -= 5
+        if 'add' in request.POST: user.balance += 500
+        elif 'subtract' in request.POST: user.balance -= 500
         user.save()
         return redirect('/')
     else: return render(request, 'main/auction.html')
@@ -376,3 +388,39 @@ def dotpaySite(request,cena, model,id):
 ################# /\ ############################# /\ #############
 #               # || #   End of Dotpay payment   # || #           #
 ################# || ############################# || #############
+
+
+#Dotpay payment
+login_required
+def portfelpaySite(request,id):
+    print(id)
+    if request.user.is_authenticated:
+        try:auto = Auta.objects.get(id=id)
+        except Auta.DoesNotExist: return "Samochód o podanym ID nie istnieje"
+        user = balance.objects.get(user=request.user)
+
+        balans = user.balance
+        cenaauta = auto.cena
+        context = {'auto':auto,'balance': user.balance}
+
+        if balans > cenaauta:
+            user.balance -= cenaauta
+            user.save()
+            auto_sprzedane = AutaSprzedane(
+            nazwa=auto.nazwa,
+            zdj_url=auto.zdj_url,
+            cena=auto.cena,
+            model=auto.model,
+            popularnosc=auto.popularnosc,
+            paliwo=auto.paliwo,
+            spalanie=auto.spalanie,
+            typ=auto.typ,
+            moc=auto.moc,
+            uzytkownik=user.id
+            )
+            auto_sprzedane.save()
+            auto.delete()
+
+            return render(request, 'main/portfelpaySuccess.html',context)
+        else: return render(request, 'main/portfelpayFail.html',context)
+    else: context={} 

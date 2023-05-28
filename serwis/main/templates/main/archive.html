@@ -5,7 +5,7 @@
     <div class="py-5 text-center container ">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="text-muted">Każdy znajdzie coś dla siebie</h1>
+                <h1 class="text-muted">Oferty już wykupione</h1>
                 <p class="lead text-muted">Wyszukaj, porównaj, wykup, sprawdź, zadzwoń - wszystko w jednym miejscu z funkcjami wyszukiwania treść</p>
             </div>
         </div>
@@ -88,13 +88,12 @@
                   <p class="card-text">Spalanie: {{ auto.spalanie }}</p>
                   <p class="card-text">Typ nadwozia: {{ auto.typ }}</p>
                   <p class="card-text">Moc silnika: {{ auto.moc }}</p>
-                  <p class="card-text">Debug id: {{ auto.id }}</p>
 
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                       {% if user.first_name %}
                         <button type="button" class="btn btn-sm btn-outline-secondary text-white">Zakupiono przez {{user.first_name}}</button>
-                        {% else %}
+                      {% else %}
                         <button type="button" class="btn btn-sm btn-outline-secondary text-white">Zakupiono przez {{user.username}}</button>
                       {% endif %}
                       <button type="button" class="btn btn-sm btn-outline-secondary text-white disabled">{{ auto.cena }}zł</button>
