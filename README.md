@@ -49,9 +49,9 @@ Lista zadań do wykonania
 - [x] Dodanie strone z zarzadzaniem aukcjami
 - [x] Utworzyc funkcjonalnosc dodawania / usuwania aukcji
 - [ ] Dodanie funkcjonalnosc modyfikacji aukcji
-- [ ] Dodanie filtrowanie po typie paliwa
+- [x] Dodanie filtrowanie po typie paliwa
 - [ ] Dodanie filtrowanie po typie nadwozia
-- [ ] Dodanie wyszukiwanie po tekscie
+- [x] Dodanie wyszukiwanie po tekscie
 - [x] Dodanie prywatnego portfela
 - [x] Zarzadzanie portfelem (mysql) ze strony
 - [x] ---
@@ -61,10 +61,10 @@ Lista zadań do wykonania
 - [x] Dodanie mozliwosc platnosci online
 - [ ] Dodanie funkcjonalonosc zmiany wartosc portfela poprzez platnosc online
 - [x] ---
-- [ ] Dodanie podstrony Archiwum z aukcjami juz wykupionymi
-- [ ] Dodanie mozliwosc zakupu aukcji (aukcja zostaje przeniesiona z Aukcje do Archiwum oraz do innej tabeli mysql)
+- [x] Dodanie podstrony Archiwum z aukcjami juz wykupionymi
+- [x] Dodanie mozliwosc zakupu aukcji (aukcja zostaje przeniesiona z Aukcje do Archiwum oraz do innej tabeli mysql)
 - [ ] Poprawa styli bootstrap na calej stronie
-- [ ] Poprawa wygladu Aukcji 
+- [x] Poprawa wygladu Aukcji 
 - [ ] Poprawa wygladu dodawania / usuwania aukcji
 - [ ] Dodanie mozliwosc wyrejestrowania uzytkownika
 
