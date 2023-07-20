@@ -1,0 +1,67 @@
+header{ 
+    opacity: 0;
+    animation: showElement 2.0s ease-in-out 0.25s forwards;
+}
+  
+@keyframes showElement {
+    0% { 
+        opacity: 0.0;
+        padding-top:15%; 
+    }
+    50%{
+        opacity: 1; 
+        padding-top:15%; 
+    }
+    100% {
+        opacity: 1;
+        padding-top:0%;
+    }
+}
+
+.content{
+    animation: showHeader 1.0s ease-in-out 2s forwards;
+    opacity: 0.0;
+}
+@keyframes showHeader {
+    0% {
+        opacity: 0.0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+.article-summary button:hover {
+    animation: showActiveButton 0.5s ease-in-out 0s forwards;
+}
+
+    .article-summary button:hover a {
+        animation: showActiveButtonChangeA 0.5s ease-in-out 0s forwards;
+    }
+
+@keyframes showActiveButton {
+    0% {
+        font-size: 14px;
+        background: rgb(48, 47, 47);
+        border: 1px solid rgb(148, 47, 47);
+    }
+
+    100% {
+        font-size: 20px;
+        background: rgb(148, 47, 47);
+        color: rgb(148, 47, 47);
+    }
+}
+
+
+@keyframes showActiveButtonChangeA {
+    0% {
+        color: white;
+    }
+
+    100% {
+        color: #ff1c1c;
+    }
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/header.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/footers.css" rel="stylesheet" />
+    <link href="css/webkits.css" rel="stylesheet" />
+    <link href="css/animations.css" rel="stylesheet" />
+
+    <!--<link href="index-animations.css" rel="stylesheet"/>
+     -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <title>FoodMenu</title>
+</head>
+<body>
+<div id="myContainer"></div>
+<div class="container">
+<header>
+    <h1>Odin Recipes</h1>
+</header>
+<div class="content">
+
+    <div class="finder">
+        <form action="https://www.google.com/search" method="get" class="finder-bar">
+            <input type="text" oninput ="filterContentByString()" placeholder="Search for best food here" name="q">
+            <button type="submit"><img src="statics/search.png"></button> 
+        </form>
+    </div>
+
+    <div class="mainmenu">
+        <div class="article-container">
+            <article class="article-summary">
+                <button onclick="showArticleDetails('Allegrens')"><a href="#">Allegrens</a></button>
+                <button onclick="showArticleDetails('How2')"><a href="#">How2</a></button>
+                <button onclick="showArticleDetails('Others')"><a href="#">Others</a></button>
+                <p class="card-excerpt" id="ShowingDetails" name="Allegrens"> Lorem ipsu dolori Lorem ipsu dolori Lorem ipsu dolori</p>
+            </article>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="footer-content">
+        <p>helpful site </p>
+        <ul class="footer-content-list">
+            <li><a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a></li>
+            <li><a href="https://github.com/"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://fontawesome.com/"><i class="fab fa-font-awesome"></i></a></li>
+        </ul>
+    </div>
+    <div class="footer-content">
+        <p>Check other project on  <a href="https://github.com/matorolll" rel="matorolGithub"><i class="fab fa-github"></i></a></p>
+    </div>
+    <div class="footer-content">
+        <p>Project for Odin courses by: <b>matorolll</b>, 2023</p>
+    </div>
+</footer>
+
+
+<script src="scripts/script.js"></script>
+</body>
+</html>
